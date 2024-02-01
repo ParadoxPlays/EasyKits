@@ -19,6 +19,8 @@ use AndreasHGK\EasyKits\EasyKits;
 
 use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\api\legacy\ClosureContext;
+use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
+use cooldogedev\BedrockEconomy\api\version\LegacyBEAPI;
 
 use onebone\economyapi\EconomyAPI;
 use Twisted\MultiEconomy\MultiEconomy;
@@ -43,7 +45,7 @@ class EconomyManager{
                 $currency = DataManager::getKey(DataManager::CONFIG, "multieconomy-currency");
                 return $economy->getAPI()->getBalance($player->getName(), $currency);
             case $economy instanceof BedrockEconomy:
-                 return $economy->getAPI()->getPlayerBalance($player->getName());
+                 return $economy->api()->getPlayerBalance($player->getName());
         }
         return 0;
     }
@@ -63,7 +65,7 @@ class EconomyManager{
                 self::getEconomy()->getAPI()->setBalance($player->getName(), DataManager::getKey(DataManager::CONFIG, "multieconomy-currency"), $money);
                 break;
             case self::getEconomy() instanceof BedrockEconomy:
-                self::getEconomy()->getAPI()->setPlayerBalance($player->getName(), (int)$money);
+                self::getEconomy()->api()->setPlayerBalance($player->getName(), (int)$money);
                 break;
         }
     }
@@ -83,7 +85,7 @@ class EconomyManager{
                 self::getEconomy()->getAPI()->takeFromBalance($player->getName(), DataManager::getKey(DataManager::CONFIG, "multieconomy-currency"), $money);
                 break;
             case self::getEconomy() instanceof BedrockEconomy:
-                self::getEconomy()->getAPI()->subtractFromPlayerBalance($player->getName(), (int)$money);
+                self::getEconomy()->api()->subtractFromPlayerBalance($player->getName(), (int)$money);
                 break;
         }
     }
@@ -103,7 +105,7 @@ class EconomyManager{
                 self::getEconomy()->getAPI()->addToBalance($player->getName(), DataManager::getKey(DataManager::CONFIG, "multieconomy-currency"), $money);
                 break;
             case self::getEconomy() instanceof BedrockEconomy:
-                self::getEconomy()->getAPI()->addToPlayerBalance($player->getName(), (int)$money);
+                self::getEconomy()->api()->addToPlayerBalance($player->getName(), (int)$money);
                 break;
         }
     }
